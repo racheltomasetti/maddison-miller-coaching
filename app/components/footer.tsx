@@ -3,7 +3,7 @@ import Stars from "@/app/components/stars";
 export default function Footer(): React.ReactElement {
   return (
     <footer className="relative bg-navy overflow-hidden py-16 px-6 md:px-12">
-      <Stars count={20} />
+      <Stars count={8} />
       <div className="relative z-10 flex flex-col md:flex-row md:items-center gap-8 md:gap-0">
 
         {/* Left */}

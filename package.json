@@ -9,6 +9,9 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@tsparticles/effect-shadow": "^4.2.1",
+    "@tsparticles/react": "^4.2.1",
+    "@tsparticles/slim": "^4.2.1",
     "next": "16.2.9",
     "react": "19.2.4",
     "react-dom": "19.2.4"

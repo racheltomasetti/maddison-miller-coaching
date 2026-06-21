@@ -1,4 +1,3 @@
-import Stars from "@/app/components/stars";
 import { ANCHORS } from "@/app/lib/constants";
 
 function MoonIcon(): React.ReactElement {
@@ -22,7 +21,6 @@ function MoonIcon(): React.ReactElement {
 export default function Hero(): React.ReactElement {
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center pt-32 pb-24 px-8 bg-[linear-gradient(160deg,#F5F0E8_0%,#FAFAF7_50%,#EEF2F5_100%)] overflow-hidden">
-      <Stars />
 
       <div className="animate-fade-up [animation-delay:0s] mb-6">
         <MoonIcon />

@@ -1,55 +1,75 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
-interface StarDot {
-  top: string;
-  left: string;
-  size: string;
-  opacity: number;
-  duration: string;
-  delay: string;
-}
+import { useId, useMemo } from "react";
+import Particles from "@tsparticles/react";
+import type { ISourceOptions } from "@tsparticles/engine";
+import { PARTICLE_GOLD } from "@/app/lib/constants";
 
 interface StarsProps {
   count?: number;
 }
 
-export default function Stars({ count = 24 }: StarsProps): React.ReactElement {
-  const [dots, setDots] = useState<StarDot[]>([]);
+export default function Stars({ count = 15 }: StarsProps): React.ReactElement {
+  const id = useId().replace(/:/g, "");
 
-  useEffect(() => {
-    const generated: StarDot[] = Array.from({ length: count }, () => {
-      const size = `${Math.random() * 2 + 1}px`;
-      return {
-        top: `${Math.random() * 100}%`,
-        left: `${Math.random() * 100}%`,
-        size,
-        opacity: Math.random() * 0.3 + 0.1,
-        duration: `${(Math.random() * 3 + 2).toFixed(1)}s`,
-        delay: `${(Math.random() * 4).toFixed(1)}s`,
-      };
-    });
-    setDots(generated);
-  }, [count]);
+  const options = useMemo<ISourceOptions>(
+    () => ({
+      fullScreen: { enable: false },
+      background: { color: { value: "transparent" } },
+      interactivity: { events: {} },
+      fpsLimit: 60,
+      particles: {
+        number: { value: count },
+        paint: {
+          color: { value: PARTICLE_GOLD },
+          fill: { enable: true },
+        },
+        shape: { type: "circle" },
+        opacity: {
+          value: { min: 0.1, max: 0.7 },
+          animation: { enable: true, speed: 0.4, sync: false },
+        },
+        size: {
+          value: { min: 2, max: 4 },
+        },
+        effect: {
+          type: "shadow",
+          options: {
+            shadow: {
+              color: { value: PARTICLE_GOLD },
+              blur: 12,
+            },
+          },
+        },
+        move: {
+          enable: true,
+          speed: 0.45,
+          direction: "none",
+          random: true,
+          straight: false,
+          outModes: { default: "out" },
+        },
+      },
+      responsive: [
+        {
+          maxWidth: 768,
+          options: {
+            particles: { size: { value: { min: 1, max: 2.5 } } },
+          },
+        },
+      ],
+      detectRetina: true,
+    }),
+    [count],
+  );
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-      {dots.map((dot, i) => (
-        <span
-          key={i}
-          className="absolute rounded-full bg-fog"
-          style={{
-            top: dot.top,
-            left: dot.left,
-            width: dot.size,
-            height: dot.size,
-            opacity: dot.opacity,
-            animation: `starPulse ${dot.duration} ease-in-out infinite alternate`,
-            animationDelay: dot.delay,
-          }}
-        />
-      ))}
+      <Particles
+        id={id}
+        className="absolute inset-0 h-full w-full"
+        options={options}
+      />
     </div>
   );
 }
